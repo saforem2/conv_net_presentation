@@ -1,0 +1,532 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Beamer Presentation
+% LaTeX Template
+% Version 1.0 (10/11/12)
+%
+% This template has been downloaded from:
+% http://www.LaTeXTemplates.com
+%
+% License:
+% CC BY-NC-SA 3.0 (http://creativecommons.org/licenses/by-nc-sa/3.0/)
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%----------------------------------------------------------------------------------------
+%	PACKAGES AND THEMES
+%----------------------------------------------------------------------------------------
+
+\documentclass{beamer}
+\usefonttheme[onlymath]{serif}
+\mode<presentation>
+{% The Beamer class comes with a number of default slide themes
+% which change the colors and layouts of slides. Below this is a list
+% of all the themes, uncomment each in turn to see what they look like.
+
+%\usetheme{default}
+%\usetheme{AnnArbor}
+%\usetheme{Antibes}
+%\usetheme{Bergen}
+%\usetheme{Berkeley}
+%\usetheme{Berlin}
+%\usetheme{Boadilla}
+%\usetheme{CambridgeUS}
+%\usetheme{Copenhagen}
+%\usetheme{Darmstadt}
+%\usetheme{Dresden}
+%\usetheme{Frankfurt}
+%\usetheme{Goettingen}
+%\usetheme{Hannover}
+%\usetheme{Ilmenau}
+%\usetheme{JuanLesPins}
+%\usetheme{Luebeck}
+\usetheme{Madrid}
+%\usetheme{Malmoe}
+%\usetheme{Marburg}
+%\usetheme{Montpellier}
+%\usetheme{PaloAlto}
+%\usetheme{Pittsburgh}
+%\usetheme{Rochester}
+%\usetheme{Singapore}
+%\usetheme{Szeged}
+%\usetheme{Warsaw}
+
+% As well as themes, the Beamer class has a number of color themes
+% for any slide theme. Uncomment each of these in turn to see how it
+% changes the colors of your current slide theme.
+
+%\usecolortheme{albatross}
+%\usecolortheme{beaver}
+%\usecolortheme{beetle}
+%\usecolortheme{crane}
+\usecolortheme{dolphin}
+%\usecolortheme{dove}
+%\usecolortheme{fly}
+%\usecolortheme{lily}
+%\usecolortheme{orchid}
+%\usecolortheme{rose}
+%\usecolortheme{seagull}
+%\usecolortheme{seahorse}
+%\usecolortheme{whale}
+%\usecolortheme{wolverine}
+%\usecolortheme{structure}
+
+%\setbeamertemplate{footline} % To remove the footer line in all slides uncomment this line
+%\setbeamertemplate{footline}[page number] % To replace the footer line in all slides with a simple slide count uncomment this line
+
+%\setbeamertemplate{navigation symbols}{} % To remove the navigation symbols from the bottom of all slides uncomment this line
+}
+
+\usepackage{graphicx} % Allows including images
+\usepackage{booktabs} % Allows the use of \toprule, \midrule and \bottomrule in tables
+\usepackage{amsmath, amssymb}
+\usepackage{mathtools}
+\usepackage{url}
+\usepackage{hyperref}
+\usepackage{graphicx}
+\usepackage{setspace}
+\usepackage{bigints}
+\usepackage{flexisym}
+\usepackage{bibentry}
+\usepackage{booktabs}
+\usepackage{xfrac}
+\usepackage{xcolor}
+\usepackage[english]{babel}
+\usepackage[font=small]{caption}
+
+
+\definecolor{lightblack}{HTML}{1c2022}
+\hypersetup{colorlinks = true,
+	urlcolor = blue,
+	linkcolor = lightblack,
+	citecolor = blue
+}
+
+%\newcommand{\ds}{\displaystyle}
+%----------------------------------------------------------------------------------------
+%	TITLE PAGE
+%----------------------------------------------------------------------------------------
+
+%\title[Phase Transitions via ML]{Identifying Phase Transitions via Convolutional Neural Networks}
+\title[Phase Transitions via ML]{Identification of the Critical Temperature for Spin Models Using
+Machine Learning}
+%{Using Convolutional Neural Networks to Identify Phase Transitions in Simple Spin Systems} % The short title appears at the bottom of every slide, the full title is only on the title page
+
+\author{Sam Foreman}
+\institute[UIowa] % Your institution as it will appear on the bottom of every slide, may be shorthand to save space
+{University of Iowa\\ % Your institution for the title page
+\medskip
+\textit{samuel-foreman@uiowa.edu} % Your email address
+}
+\date{\today} % Date, can be changed to a custom date
+
+\begin{document}
+
+\begin{frame}
+ % Print the title page as the first slide
+\titlepage\end{frame}
+
+\begin{frame}
+\frametitle{Overview} % Table of contents slide, comment this block out to remove it
+\tableofcontents % Throughout your presentation, if you choose to use \section{} and \subsection{} commands, these will automatically be printed on this slide as an overview of your presentation
+\end{frame}
+
+%----------------------------------------------------------------------------------------
+%	PRESENTATION SLIDES
+%----------------------------------------------------------------------------------------
+
+%------------------------------------------------
+\section{Introduction} % Sections can be created in order to organize your presentation into discrete blocks, all sections and subsections are automatically printed in the table of contents as an overview of the talk
+%------------------------------------------------
+
+\subsection{Motivation} % A subsection can be created just before a set of slides with a common theme to further break down your presentation into chunks
+\begin{frame}
+\frametitle{Motivation}
+	\begin{itemize}
+		\item Can machine learning be used to identify phase transitions in spin systems?
+		\item How can we generalize this model to systems with more complicated structure?
+			\begin{itemize}
+				\item e.g. $O(2)$ model, topological phases, detection of order parameters etc.
+			\end{itemize}
+		\item Useful as complementary method to verify Monte Carlo results.
+		\item Problems with current approaches:
+			\begin{itemize}
+				%\item ********** UPDATE **********
+				\item Monte-Carlo methods are often computationally exhaustive.
+				\item The sign problem when dealing with high-dimensional fermion systems.
+				%\item The identification of topological phases is computationally exhaustive using current quantum Monte-Carlo methods.
+			\end{itemize}
+	\end{itemize}
+\end{frame}
+
+%\begin{frame}
+%\frametitle{Motivation (cont'd)}
+	%\begin{itemize}
+		%\item Begin with simple 2D Ising Model, train convolutional neural network to locate phase transition at $T_c$.
+	%\end{itemize}
+%\end{frame}
+
+\begin{frame}
+\frametitle{Motivation (cont'd)}
+	\begin{itemize}
+		\item We show that convolutional neural networks (CNN) are capable of accurately predicting the critical temperature of the phase transition in both the 2D Ising and XY spin models.
+		\item Using spin configuration data generated from Monte-Carlo sampling, we implement state-of-the-art machine learning algorithms to classify the systems phase.
+		\item We begin by performing a thorough analysis on the solvable 2D Ising model, and attempt to generalize these results to the 2D XY model.
+	\end{itemize}
+\end{frame}
+
+
+
+\subsection{Setup} % A subsection can be created just before a set of slides with a common theme to further break down your presentation into chunks
+\begin{frame}
+\frametitle{Setup}
+	\begin{itemize}
+		%\item Supervised Training:
+			%\begin{itemize}
+		\item Begin with simple 2D spin systems:
+				\begin{itemize}
+					\item 2D Ising Spin Model, with $$H_{ising}(\sigma) = - J \sum_{\left<i,j\right>} \sigma_i \sigma_j$$
+						where $\sigma_{i} \in \left\{-1, +1\right\}$
+						\bigskip
+					\item 2D XY Spin Model, with $$ H_{XY}(\theta) = - J \sum_{i \ne j} cos\left(\theta_i - \theta_j\right) $$
+						where $\theta_{i} \in (-\pi, \pi)$
+				\end{itemize}
+			%\end{itemize}
+	\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Setup}
+	\begin{itemize}
+		\item Use Metropolis algorithm to generate example configuration data.
+		%\item Having generated configuration data, we perform both supervised and unsupervised learning methods
+			%to try and locate a phase transition.
+		\item Perform both supervised and unsupervised learning methods to locate a phase transition.
+		\item Supervised learning is useful when we are able to provide labeled data (e.g. spins generated from Monte-Carlo techniques)
+			consisting of a configuration, along with a phase label i.e. $T \lessgtr T_{c}$.
+		\item Unsupervised learning is useful when we have unlabeled data, or when we wish to validate the results obtained from supervised learning.
+			%in an attempt to identify a phase transition and extract the temperature at which this transition occurs.
+	\end{itemize}
+
+\end{frame}
+
+\begin{frame}
+	\frametitle{Setup}
+	\begin{itemize}
+		\item \textbf{Supervised Learning:}
+			\begin{itemize}
+			%\item Expect phase transition at some critical temperature, $T_c$.
+			\item For the Ising model, we expect a phase transition at $$ T_c = \frac{2 J}{k_B \ln(1+\sqrt{2})} \approx 2.269 J/k_{b}$$
+			%\item For a $16 \times 16$ lattice, we perform $2\times10^{4}$ equilibration steps at each $T$.
+			%\item Use temperature steps of $1\times10^{-3}$ from $T : 1 \rightarrow 3$
+			\item For the XY model, we also expect a phase transition at a temperature near $T_c \approx 0.893$.
+			%\item In order to perform supervised learning, we feed our network the label indicating the configurations phase, in addition to the
+				%raw configuration data.
+			\end{itemize}
+		\item \textbf{Unsupervised Learning:}
+			\begin{itemize}
+				\item For the Ising model, we also perform unsupervised learning, where we perform a cluster analysis on dimensionally-reduced
+					configuration data that is able to identify unique phases without being given prior information about the configurations temperature.
+			\end{itemize}
+	\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Neural Network}
+	\begin{itemize}
+		\item Perform supervised learning with input data consisting of $N$ spin configurations on an $L \times L$ lattice, at a specific temperature $T$.
+			\begin{equation}
+				\left\{\left(\left\{\sigma_{ij}^{n}\right\}, T_n\right) \left| T_n = T_0 + n\epsilon \right. \right\}_{n = 0, \ldots, N}
+			\end{equation}
+		%\item Each configuration is given a `label':
+		\item Create binary training labels to identify the phase:
+		\begin{equation*}
+			y(T_n)=
+			\begin{cases}
+				0,	&\text{if } T_n < T_{c}\cr
+				1,	&\text{if } T_n > T_{c}
+			\end{cases}
+		\end{equation*}
+	\end{itemize}
+\end{frame}
+
+\subsection{Model}
+\begin{frame}
+\frametitle{Neural Network (cont'd)}
+	\begin{itemize}
+		\item Construct convolutional neural network, with architecture\footnote[frame]{\href{https://arxiv.org/pdf/1605.01735.pdf}{arXiv:1605.01735 [cond-mat.str-el]}}
+			\begin{figure}
+				\includegraphics[width=0.8\linewidth]{conv_net.png}
+			\end{figure}
+		\item Convolutional neural networks have the advantage of using a coarse-grained (hierarchical) approach to help locate features for a given configuration.
+		\item This approach is reminiscent of the `block variables` used in renormalization group techniques, which help to separate internal and external degrees of freedom.
+		\item During a given forward pass, a filter is convolved across the input data, producing an activation map which gives the responses at every spatial position.
+
+
+
+		%\item By convoluting a filter across the example configuration, we able to better identify features
+	\end{itemize}
+\end{frame}
+
+
+
+\begin{frame}
+\frametitle{Neural Network (cont'd)}
+	\begin{itemize}
+		%\item The network uses a softmax classifier as the output layer, which computes the normalized class probability.
+		\item We use a softmax classifier as the output layer, which computes a probability distribution over the possible outcomes.
+			\begin{equation}
+				P(y=j|\mathbf{x}) = \frac{e^{\mathbf{x}^{T} \mathbf{w}_{j}}}{\sum_{k=1}^{K} e^{\mathbf{x}^{T}\mathbf{w}_{k}}}
+			\end{equation}
+			where $\mathbf{x}^{T}\mathbf{w}_{j}$ is the $j^{th}$ component of the previous layers output.
+		\item Since we are using a binary classification system (i.e. $T \lessgtr T_{c}$), the network will output an array of scores,
+			$$S = \left[s_{below}, s_{above}\right]$$
+			where
+			$$s_{below} + s_{above} = 1 $$
+		\item We can interpret this output as a confidence measure of its predicted classification.
+		%\item For example, if we give our network an example configuration and it returns an array $\left[0.95, 0.05\right]$,
+			%this implies that there is a $95\%$ probability that the configuration was correctly identified as being above the critical temperature.
+	\end{itemize}
+\end{frame}
+
+\section{Results}
+
+\subsection{Ising Results}
+\subsubsection{Supervised Ising Results}
+\begin{frame}
+\frametitle{Supervised Learning on Ising Model}
+	Results after training for 10 epochs.
+	\begin{figure}
+		%\includegraphics[width=0.8\linewidth]{crit_temp_plot.png}
+		\includegraphics[width=0.8\linewidth]{16crit_temp_plot_avg.png}
+	\end{figure}
+\end{frame}
+
+\begin{frame}
+\frametitle{Results (cont'd)}
+	\begin{itemize}
+		\item From this result, we see that our network correctly classifies configurations
+			at temperatures well above and below the critical temperature.
+		\item At temperatures $T \approx T_c$, we see that this classification scheme breaks down.
+		\item This signifies a hidden structure (feature) in our data, which we know to be representative of a phase transition.
+	\end{itemize}
+\end{frame}
+
+
+\subsubsection{Unsupervised Ising Model}
+\begin{frame}
+\frametitle{Unsupervised Learning on Ising Model}
+	\begin{itemize}
+		\item Principal Component Analysis (PCA):
+			\begin{itemize}
+				\item Used to project configuration data onto the dimensions with the largest variances.
+				\item This is accomplished by performing SVD decomposition on configuration data.
+				\item Applied to Ising spins, PCA finds the most significant variations of the data changing with temperature.
+				\item We expect that this principal component should be representative of the uniform magnetization,
+					\begin{equation}
+						m = \frac{1}{N}\sum_i \sigma_i
+					\end{equation}
+				%\item As the temperature changes, the configurations vary most significantly along the first principal component.
+			\end{itemize}
+
+		\item $k$-Means Clustering:
+			\begin{itemize}
+				%\item Given a collection of configurations, we aim to partition
+				\item Having projected each configuration onto this low-dimensional space, we then wish to partition
+					these configurations into $k$ unique clusters.
+				\end{itemize}
+		%\item In order to better visualize the hidden structure of the Ising model,
+			%we apply $k$-means clustering on our configuration data.
+		%\item We want to see if our model is still able to identify the phase transition
+			%without being given any information about the phase.
+		%\item PCA: ** EXPLAIN PCA ANALYSIS **
+		%\item ** EXPLAIN K-MEANS CLUSTERING **
+	\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{$k$-means Clustering Results}
+	\begin{itemize}
+		\item After projecting the covariance matrix onto the two largest eigenvalues, we can clearly
+			identify three distinct regions:
+	\end{itemize}
+	\begin{figure}
+		\includegraphics[width=0.75\linewidth]{ising_pca_cluster16_1024.png}
+	\end{figure}
+\end{frame}
+
+
+\subsection{XY Results}
+\begin{frame}
+	\frametitle{Supervised Learning on XY Model}
+	\begin{itemize}
+		\item Results after training for 10 epochs on $32\times 32$ XY spin lattice.
+	\end{itemize}
+	\begin{figure}
+		\includegraphics[width=0.7\linewidth]{32crit_temp_plot_new.png}
+		\caption{Note that the green line is an approximation to the predicted critical temperature,
+			$ T_c \approx 0.893 $, and the purple line represents our networks predicted critical
+			temperature, $T_{c, pred} = 0.873$}.
+	\end{figure}
+\end{frame}
+
+\section{Conclusion}
+\frametitle{Conclusion}
+\begin{frame}
+	\begin{itemize}
+		\item Supervised Learning
+			\begin{itemize}
+				\item We have shown that standard neural networks are capable of not only recognizing hidden features, but are also
+					able to provide a meaningful insight into physical parameters that govern the phase transition in complex spin systems.
+				\item By employing both supervised and unsupervised learning algorithms on raw configuration data, we confirm that our model
+					correctly distinguishes between phases, even without being given any \textit{a priori} information about
+					the underlying physical structure of the system.
+			\end{itemize}
+	\end{itemize}
+\end{frame}
+
+
+\begin{frame}
+	\frametitle{References}
+	\begin{enumerate}
+		\item \href{https://arxiv.org/pdf/1605.01735.pdf}{arXiv:1605.01735 [cond-mat.str-el]}
+		\item \href{https://arxiv.org/abs/1609.09087.pdf}{arXiv:1609.09087 [cond-mat.dis-nn]}
+		\item \href{https://arxiv.org/abs/1606.00318.pdf}{arXiv:1606.00318 [cond-mat.stat-mech]}
+		\item \href{https://arxiv.org/abs/1608.07848.pdf}{arXiv:1608.07848 [cond-mat.str-el]}
+	\end{enumerate}
+\end{frame}
+
+%------------------------------------------------
+
+%\begin{frame}
+%\frametitle{Bullet Points}
+%\begin{itemize}
+%\item Lorem ipsum dolor sit amet, consectetur adipiscing elit
+%\item Aliquam blandit faucibus nisi, sit amet dapibus enim tempus eu
+%\item Nulla commodo, erat quis gravida posuere, elit lacus lobortis est, quis porttitor odio mauris at libero
+%\item Nam cursus est eget velit posuere pellentesque
+%\item Vestibulum faucibus velit a augue condimentum quis convallis nulla gravida
+%\end{itemize}
+%\end{frame}
+
+%------------------------------------------------
+
+%\begin{frame}
+%\frametitle{Blocks of Highlighted Text}
+%\begin{block}{Block 1}
+%Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer lectus nisl, ultricies in feugiat rutrum, porttitor sit amet augue. Aliquam ut tortor mauris. Sed volutpat ante purus, quis accumsan dolor.
+%\end{block}
+
+%\begin{block}{Block 2}
+%Pellentesque sed tellus purus. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Vestibulum quis magna at risus dictum tempor eu vitae velit.
+%\end{block}
+
+%\begin{block}{Block 3}
+%Suspendisse tincidunt sagittis gravida. Curabitur condimentum, enim sed venenatis rutrum, ipsum neque consectetur orci, sed blandit justo nisi ac lacus.
+%\end{block}
+%\end{frame}
+
+%------------------------------------------------
+
+%\begin{frame}
+%\frametitle{Multiple Columns}
+%\begin{columns}[c] % The "c" option specifies centered vertical alignment while the "t" option is used for top vertical alignment
+
+%\column{.45\textwidth} % Left column and width
+%\textbf{Heading}
+%\begin{enumerate}
+%\item Statement
+%\item Explanation
+%\item Example
+%\end{enumerate}
+
+%\column{.5\textwidth} % Right column and width
+%Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer lectus nisl, ultricies in feugiat rutrum, porttitor sit amet augue. Aliquam ut tortor mauris. Sed volutpat ante purus, quis accumsan dolor.
+
+%\end{columns}
+%\end{frame}
+
+%------------------------------------------------
+%\section{Second Section}
+%------------------------------------------------
+
+%\begin{frame}
+%\frametitle{Table}
+%\begin{table}
+%\begin{tabular}{l l l}
+%\toprule
+%\textbf{Treatments} & \textbf{Response 1} & \textbf{Response 2}\\
+%\midrule
+%Treatment 1 & 0.0003262 & 0.562 \\
+%Treatment 2 & 0.0015681 & 0.910 \\
+%Treatment 3 & 0.0009271 & 0.296 \\
+%\bottomrule
+%\end{tabular}
+%\caption{Table caption}
+%\end{table}
+%\end{frame}
+
+%------------------------------------------------
+
+%\begin{frame}
+%\frametitle{Theorem}
+%\begin{theorem}[Mass--energy equivalence]
+%$E = mc^2$
+%\end{theorem}
+%\end{frame}
+
+%------------------------------------------------
+
+%\begin{frame}[fragile] % Need to use the fragile option when verbatim is used in the slide
+%\frametitle{Verbatim}
+%\begin{example}[Theorem Slide Code]
+%\begin{verbatim}
+%\begin{frame}
+%\frametitle{Theorem}
+%\begin{theorem}[Mass--energy equivalence]
+%$E = mc^2$
+%\end{theorem}
+%\end{frame}\end{verbatim}
+%\end{example}
+%\end{frame}
+
+%------------------------------------------------
+
+%\begin{frame}
+%\frametitle{Figure}
+%Uncomment the code on this slide to include your own image from the same directory as the template .TeX file.
+%\begin{figure}
+%\includegraphics[width=0.8\linewidth]{test}
+%\end{figure}
+%\end{frame}
+
+%------------------------------------------------
+
+%\begin{frame}[fragile] % Need to use the fragile option when verbatim is used in the slide
+%\frametitle{Citation}
+%%An example of the \verb|\cite| command to cite within the presentation:\\~
+
+%This statement requires citation \cite{p1}.
+%\end{frame}
+
+%------------------------------------------------
+
+%\begin{frame}
+%\frametitle{References}
+%\footnotesize{\begin{thebibliography}{99} % Beamer does not support BibTeX so references must be inserted manually as below
+%\bibitem[Smith, 2012]{p1} John Smith (2012)
+%\newblock Title of the publication
+%\newblock \emph{Journal Name} 12(3), 45 -- 678.
+%\end{thebibliography}
+%}
+%\end{frame}
+
+
+%------------------------------------------------
+
+%\begin{frame}
+%\Huge{\centerline{The End}}
+%\end{frame}
+
+%----------------------------------------------------------------------------------------
+
+\end{document}

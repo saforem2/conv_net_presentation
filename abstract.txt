@@ -1,0 +1,14 @@
+In recent years machine learning techniques have been applied to a
+
+In recent years, machine learning techniques have become a critical
+
+We show that convolutional neural networks are capable of both distinguishing between phases in two-dimensional spin systems
+
+We show that convolutional neural networks, when trained on various two-dimensional spin systems,  
+
+We show that convolutional neural networks (CNN) applied to various two-dimensional spin systems are capable of accurately predicting the critical temperature o
+
+We show that convolutional neural networks (CNN) are capable of accurately predicting the critical temperature of the phase transition in both the two-dimensional Ising and XY spin models. Using spin configuration data generated from Monte Carlo sampling, our network learns to classify the systems phase without any prior knowledge of its physical properties. We begin by employing supervised learning for the 2D Ising model, and are able to successfully identify the critical temperature and obtain a classification accuracy of 99%. We then apply a similar analysis to the 2D XY model and are again able to extract the critical temperature of the Kosterlitz-Thouless transition. From these results, we expect that our model should be able to identify hidden structures in a wide variety of spin systems. 
+
+
+We implement a convolutional neural network (CNN) on two different spin systems and demonstrate that our model is not only capable of distinguishing between phases, but is also able to predict the critical temperature at which the phase transition occurs. 
